@@ -23,9 +23,9 @@ enum Role {
 }
 
 enum EducationLevel {
-  PRIMARY     // الطور الابتدائي
-  MIDDLE      // الطور المتوسط
-  SECONDARY   // الطور الثانوي
+  PRIMARY
+  MIDDLE
+  SECONDARY
 }
 
 model User {
@@ -35,12 +35,11 @@ model User {
   passwordHash  String
   role          Role            @default(STUDENT)
   level         EducationLevel? @default(PRIMARY)
-  wilaya        String?         // الولاية
+  wilaya        String?
   avatarUrl     String?
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 
-  // LMS & Gamification Relation
   gamification  GamificationProfile?
   enrolledCourses CourseEnrollment[]
   contributions TeacherContribution[]
@@ -49,23 +48,22 @@ model User {
 }
 
 // -------------------------------------------------------------
-// 1. LINGUISTIC ENGINEERING & SMART DICTIONARY (المحور الثالث)
+// 1. LINGUISTIC ENGINEERING & SMART DICTIONARY
 // -------------------------------------------------------------
 model DictionaryEntry {
   id                String   @id @default(uuid())
-  tifinagh          String   // الكتابة بالتيفيناغ e.g. ⴰⵎⴰⵣⵉⵖ
-  latinTamaziɣt     String   // e.g. Amazigh
-  arabicMeaning     String   // الترجمة بالعربية e.g. الإنساني الحر
-  frenchMeaning     String?  // الترجمة بالفرنسية e.g. Homme libre
-  root              String?  // الجذر اللغوي e.g. M-Z-Ɣ
-  partOfSpeech      String   // اسم، فعل، صفة...
-  isLexicalCommon   Boolean  @default(false) // المشترك المعجمي بين جميع المناطق
-  isStandardized    Boolean  @default(false) // مدمجة في الأمازيغية المعيارية (Tamaziɣt Tanawayt)
-  standardCategory  String?  // المجال العلمي/التقني للكلمات المعيارية
-  audioUrl          String?  // النطق المعياري الصوتي
+  tifinagh          String
+  latinTamaziɣt     String
+  arabicMeaning     String
+  frenchMeaning     String?
+  root              String?
+  partOfSpeech      String
+  isLexicalCommon   Boolean  @default(false)
+  isStandardized    Boolean  @default(false)
+  standardCategory  String?
+  audioUrl          String?
   createdAt         DateTime @default(now())
 
-  // Regional Variants across Algeria & North Africa
   variants          DialectVariant[]
   commonBadges      LexicalCommonBadge[]
 }
@@ -75,11 +73,11 @@ model DialectVariant {
   dictionaryEntryId String
   dictionaryEntry   DictionaryEntry @relation(fields: [dictionaryEntryId], references: [id], onDelete: Cascade)
   
-  dialectCode       String   // e.g. KAB (قبائلية), CHA (شاوية), MOZ (مزابية), TUA (تارقية), CHE (شنوية), RIF (ريفي)
-  dialectName       String   // اسم اللهجة/المتغير
-  region            String   // المنطقة / الولاية
-  localSpelling     String   // النطق/الكتابة المحلية
-  audioPronunciation String? // تسجيل نطق الكلمة بهذه اللهجة
+  dialectCode       String
+  dialectName       String
+  region            String
+  localSpelling     String
+  audioPronunciation String?
   usageNotes        String?
 }
 
@@ -87,7 +85,7 @@ model LexicalCommonBadge {
   id                String   @id @default(uuid())
   dictionaryEntryId String
   dictionaryEntry   DictionaryEntry @relation(fields: [dictionaryEntryId], references: [id], onDelete: Cascade)
-  regionCode        String   // الرمز الإقليمي للمنطقة المشاركة في الكلمة
+  regionCode        String
   regionName        String
 }
 
@@ -98,23 +96,23 @@ model StandardTermProposal {
   termLatin     String
   termTifinagh  String
   arabicMeaning String
-  domain        String   // e.g. التكنولوجيا، الرياضيات، الطب، الإعلام
+  domain        String
   justification String
-  status        String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  status        String   @default("PENDING")
   linguistVotes Int      @default(0)
   createdAt     DateTime @default(now())
 }
 
 // -------------------------------------------------------------
-// 2. PEDAGOGICAL ENGINEERING & LMS (المحور الثاني)
+// 2. PEDAGOGICAL ENGINEERING & LMS
 // -------------------------------------------------------------
 model Course {
   id            String         @id @default(uuid())
   title         String
   description   String
   level         EducationLevel
-  gradeYear     Int            // e.g., 1, 2, 3, 4, 5
-  curriculumCode String        // رمز المقرر في المناهج الرسمية الوطنية
+  gradeYear     Int
+  curriculumCode String
   icon          String?
   createdAt     DateTime       @default(now())
 
@@ -136,8 +134,8 @@ model Lesson {
   moduleId      String
   module        CourseModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   title         String
-  contentType   String       // GAMIFIED_STORY, GRAMMAR_UNIT, LITERATURE_ANALYSIS, AUDIO_COMIC
-  contentData   Json         // محتوى الدرس (قصة، أسئلة، استماع...)
+  contentType   String
+  contentData   Json
   xpReward      Int          @default(50)
   orderIndex    Int
 }
@@ -149,7 +147,7 @@ model GamificationProfile {
   xp            Int      @default(0)
   streakDays    Int      @default(1)
   lastActive    DateTime @default(now())
-  badges        String   // JSON string of earned badge codes
+  badges        String
   avatarCustom  Json?
 }
 
@@ -164,24 +162,24 @@ model CourseEnrollment {
 }
 
 // -------------------------------------------------------------
-// 3. DIGITAL MUSEUM & CULTURAL HERITAGE (المحور الأول)
+// 3. DIGITAL MUSEUM & CULTURAL HERITAGE
 // -------------------------------------------------------------
 model MuseumExhibit {
   id          String   @id @default(uuid())
   title       String
-  period      String   // e.g. العصر العتيق، العصر الوسيط، التراث المادي
-  region      String   // المنطقة أو الموقع التاريخي
+  period      String
+  region      String
   description String
-  mediaType   String   // VIDEO_3D, MOTION_GRAPHICS, LIVE_ACTION, ARTIFACT_IMAGE
+  mediaType   String
   mediaUrl    String
   thumbnailUrl String?
-  mapLat      Float?   // إحداثيات الخريطة التفاعلية
+  mapLat      Float?
   mapLng      Float?
   historicalContext String
 }
 
 // -------------------------------------------------------------
-// 4. COLLABORATIVE & NATIONAL TALENT PORTAL (المحور الرابع)
+// 4. COLLABORATIVE & NATIONAL TALENT PORTAL
 // -------------------------------------------------------------
 model TeacherContribution {
   id          String   @id @default(uuid())
@@ -192,7 +190,7 @@ model TeacherContribution {
   wilaya      String
   contentUrl  String
   summary     String
-  status      String   @default("APPROVED") // PENDING, APPROVED
+  status      String   @default("APPROVED")
   createdAt   DateTime @default(now())
 }
 
@@ -202,7 +200,7 @@ model CulturalForumPost {
   author      User     @relation(fields: [authorId], references: [id])
   title       String
   wilayaOrigin String
-  category    String   // عادات، أمثال شعبية، شعر أهليل، فلكلور، تقاليد
+  category    String
   content     String
   likesCount  Int      @default(0)
   createdAt   DateTime @default(now())
