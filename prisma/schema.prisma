@@ -1,0 +1,209 @@
+// Prisma Schema for AGY-AMAZIGH Unified Digital Platform
+// Covers Dictionary, LMS, Museum, and Collaborative Portal
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// -------------------------------------------------------------
+// CORE & USER ROLES
+// -------------------------------------------------------------
+enum Role {
+  STUDENT
+  TEACHER
+  PARENT
+  LINGUIST_EXPERT
+  MUSEUM_CURATOR
+  ADMIN
+}
+
+enum EducationLevel {
+  PRIMARY     // الطور الابتدائي
+  MIDDLE      // الطور المتوسط
+  SECONDARY   // الطور الثانوي
+}
+
+model User {
+  id            String          @id @default(uuid())
+  name          String
+  email         String          @unique
+  passwordHash  String
+  role          Role            @default(STUDENT)
+  level         EducationLevel? @default(PRIMARY)
+  wilaya        String?         // الولاية
+  avatarUrl     String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  // LMS & Gamification Relation
+  gamification  GamificationProfile?
+  enrolledCourses CourseEnrollment[]
+  contributions TeacherContribution[]
+  posts         CulturalForumPost[]
+  standardizationProposals StandardTermProposal[]
+}
+
+// -------------------------------------------------------------
+// 1. LINGUISTIC ENGINEERING & SMART DICTIONARY (المحور الثالث)
+// -------------------------------------------------------------
+model DictionaryEntry {
+  id                String   @id @default(uuid())
+  tifinagh          String   // الكتابة بالتيفيناغ e.g. ⴰⵎⴰⵣⵉⵖ
+  latinTamaziɣt     String   // e.g. Amazigh
+  arabicMeaning     String   // الترجمة بالعربية e.g. الإنساني الحر
+  frenchMeaning     String?  // الترجمة بالفرنسية e.g. Homme libre
+  root              String?  // الجذر اللغوي e.g. M-Z-Ɣ
+  partOfSpeech      String   // اسم، فعل، صفة...
+  isLexicalCommon   Boolean  @default(false) // المشترك المعجمي بين جميع المناطق
+  isStandardized    Boolean  @default(false) // مدمجة في الأمازيغية المعيارية (Tamaziɣt Tanawayt)
+  standardCategory  String?  // المجال العلمي/التقني للكلمات المعيارية
+  audioUrl          String?  // النطق المعياري الصوتي
+  createdAt         DateTime @default(now())
+
+  // Regional Variants across Algeria & North Africa
+  variants          DialectVariant[]
+  commonBadges      LexicalCommonBadge[]
+}
+
+model DialectVariant {
+  id                String   @id @default(uuid())
+  dictionaryEntryId String
+  dictionaryEntry   DictionaryEntry @relation(fields: [dictionaryEntryId], references: [id], onDelete: Cascade)
+  
+  dialectCode       String   // e.g. KAB (قبائلية), CHA (شاوية), MOZ (مزابية), TUA (تارقية), CHE (شنوية), RIF (ريفي)
+  dialectName       String   // اسم اللهجة/المتغير
+  region            String   // المنطقة / الولاية
+  localSpelling     String   // النطق/الكتابة المحلية
+  audioPronunciation String? // تسجيل نطق الكلمة بهذه اللهجة
+  usageNotes        String?
+}
+
+model LexicalCommonBadge {
+  id                String   @id @default(uuid())
+  dictionaryEntryId String
+  dictionaryEntry   DictionaryEntry @relation(fields: [dictionaryEntryId], references: [id], onDelete: Cascade)
+  regionCode        String   // الرمز الإقليمي للمنطقة المشاركة في الكلمة
+  regionName        String
+}
+
+model StandardTermProposal {
+  id            String   @id @default(uuid())
+  proposedByUserId String
+  proposedBy    User     @relation(fields: [proposedByUserId], references: [id])
+  termLatin     String
+  termTifinagh  String
+  arabicMeaning String
+  domain        String   // e.g. التكنولوجيا، الرياضيات، الطب، الإعلام
+  justification String
+  status        String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  linguistVotes Int      @default(0)
+  createdAt     DateTime @default(now())
+}
+
+// -------------------------------------------------------------
+// 2. PEDAGOGICAL ENGINEERING & LMS (المحور الثاني)
+// -------------------------------------------------------------
+model Course {
+  id            String         @id @default(uuid())
+  title         String
+  description   String
+  level         EducationLevel
+  gradeYear     Int            // e.g., 1, 2, 3, 4, 5
+  curriculumCode String        // رمز المقرر في المناهج الرسمية الوطنية
+  icon          String?
+  createdAt     DateTime       @default(now())
+
+  modules       CourseModule[]
+  enrollments   CourseEnrollment[]
+}
+
+model CourseModule {
+  id          String   @id @default(uuid())
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title       String
+  orderIndex  Int
+  lessons     Lesson[]
+}
+
+model Lesson {
+  id            String       @id @default(uuid())
+  moduleId      String
+  module        CourseModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  title         String
+  contentType   String       // GAMIFIED_STORY, GRAMMAR_UNIT, LITERATURE_ANALYSIS, AUDIO_COMIC
+  contentData   Json         // محتوى الدرس (قصة، أسئلة، استماع...)
+  xpReward      Int          @default(50)
+  orderIndex    Int
+}
+
+model GamificationProfile {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  xp            Int      @default(0)
+  streakDays    Int      @default(1)
+  lastActive    DateTime @default(now())
+  badges        String   // JSON string of earned badge codes
+  avatarCustom  Json?
+}
+
+model CourseEnrollment {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progressPct Float    @default(0.0)
+  completedAt DateTime?
+}
+
+// -------------------------------------------------------------
+// 3. DIGITAL MUSEUM & CULTURAL HERITAGE (المحور الأول)
+// -------------------------------------------------------------
+model MuseumExhibit {
+  id          String   @id @default(uuid())
+  title       String
+  period      String   // e.g. العصر العتيق، العصر الوسيط، التراث المادي
+  region      String   // المنطقة أو الموقع التاريخي
+  description String
+  mediaType   String   // VIDEO_3D, MOTION_GRAPHICS, LIVE_ACTION, ARTIFACT_IMAGE
+  mediaUrl    String
+  thumbnailUrl String?
+  mapLat      Float?   // إحداثيات الخريطة التفاعلية
+  mapLng      Float?
+  historicalContext String
+}
+
+// -------------------------------------------------------------
+// 4. COLLABORATIVE & NATIONAL TALENT PORTAL (المحور الرابع)
+// -------------------------------------------------------------
+model TeacherContribution {
+  id          String   @id @default(uuid())
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  title       String
+  targetLevel EducationLevel
+  wilaya      String
+  contentUrl  String
+  summary     String
+  status      String   @default("APPROVED") // PENDING, APPROVED
+  createdAt   DateTime @default(now())
+}
+
+model CulturalForumPost {
+  id          String   @id @default(uuid())
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  title       String
+  wilayaOrigin String
+  category    String   // عادات، أمثال شعبية، شعر أهليل، فلكلور، تقاليد
+  content     String
+  likesCount  Int      @default(0)
+  createdAt   DateTime @default(now())
+}
