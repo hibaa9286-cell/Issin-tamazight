@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { LMS_COURSES } from '@/lib/lms-data';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const level = searchParams.get('level');
@@ -24,7 +26,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { lessonId, quizAnswers, currentXP } = body;
 
-    // Calculate XP reward
     const addedXP = 50;
     const newTotalXP = (currentXP || 0) + addedXP;
 

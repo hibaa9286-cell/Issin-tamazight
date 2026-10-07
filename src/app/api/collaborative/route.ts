@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { INITIAL_TEACHER_CONTRIBUTIONS, INITIAL_CULTURAL_POSTS } from '@/lib/collaborative-data';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   return NextResponse.json({
     success: true,
@@ -12,7 +14,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const type = body.type; // 'TEACHER_CONTRIB' or 'CULTURAL_POST'
+    const type = body.type;
 
     if (type === 'TEACHER_CONTRIB') {
       const newContrib = {
