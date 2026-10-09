@@ -1,13 +1,12 @@
-import { PrismaClient } from '@prisma/client';
+let prismaClient: any = null;
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient | undefined };
-
-export const prisma =
-  globalForPrisma.prisma ||
-  (process.env.DATABASE_URL
-    ? new PrismaClient({ log: ['query', 'error', 'warn'] })
-    : (null as unknown as PrismaClient));
-
-if (process.env.NODE_ENV !== 'production' && process.env.DATABASE_URL) {
-  globalForPrisma.prisma = prisma;
+try {
+  const { PrismaClient } = require('@prisma/client');
+  if (process.env.DATABASE_URL) {
+    prismaClient = new PrismaClient({ log: ['query', 'error', 'warn'] });
+  }
+} catch (e) {
+  prismaClient = null;
 }
+
+export const prisma = prismaClient;
