@@ -2,6 +2,9 @@
   "name": "amazigh-platform",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,7 +18,7 @@
     "autoprefixer": "^10.4.17",
     "clsx": "^2.1.0",
     "lucide-react": "^0.330.0",
-    "next": "^14.1.0",
+    "next": "14.1.0",
     "postcss": "^8.4.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
