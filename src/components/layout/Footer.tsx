@@ -31,7 +31,7 @@ export default function Footer() {
                 </div>
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-extrabold text-amber-100">أگـــــرّام (AGY-AMAZIGH)</span>
+                <span className="text-xl font-extrabold text-amber-100">TAMAZIGHT</span>
                 <span className="text-xs text-amber-400/80 font-mono">ⵜⴰⵎⴰⵣⵉⵖⵜ ⵜⴰⵏⴰⵡⴰⵢⵜ</span>
               </div>
             </div>
@@ -52,7 +52,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Col 2: Pillar 1 & 2 */}
+          {/* Col 2: Pillar 1 */}
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-amber-300 flex items-center gap-2 border-b border-amber-500/20 pb-2">
               <Landmark className="w-4 h-4 text-amber-400" />
@@ -147,7 +147,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
           <div className="flex items-center gap-2 text-slate-400">
-            <span>© 2026 منصة أگـــــرّام AGY-AMAZIGH. تصميم وتنفيذ هندسي متكامل.</span>
+            <span>© 2026 منصة TAMAZIGHT. تصميم وتنفيذ هندسي متكامل.</span>
           </div>
 
           <div className="flex items-center gap-1 text-slate-400">

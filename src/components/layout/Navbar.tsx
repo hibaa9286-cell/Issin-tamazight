@@ -113,10 +113,7 @@ export default function Navbar() {
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-amber-300 via-amber-100 to-cyan-300 bg-clip-text text-transparent">
-                  أگـــــرّام
-                </span>
-                <span className="text-xs px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-mono font-bold border border-amber-500/30">
-                  AGY
+                  TAMAZIGHT
                 </span>
               </div>
               <span className="text-[11px] text-slate-400 font-medium tracking-wide">
