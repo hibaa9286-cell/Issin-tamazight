@@ -1,4 +1,4 @@
-import { DictionaryEntryData } from '@/types';
+﻿import { DictionaryEntryData } from '@/types';
 
 export const INITIAL_DICTIONARY_ENTRIES: DictionaryEntryData[] = [
   {
@@ -18,7 +18,7 @@ export const INITIAL_DICTIONARY_ENTRIES: DictionaryEntryData[] = [
       { id: 'v1-2', dialectCode: 'CHA', dialectName: 'الشاوية (ⵜⴰⵛⴰⵡⵉⵜ)', region: 'باتنة / خنشلة / أم البواقي', localSpelling: 'Amaziɣ' },
       { id: 'v1-3', dialectCode: 'MOZ', dialectName: 'المزابية (ⵜⴰⵎⵣⴰⴱⵜ)', region: 'غرداية / وادي مزاب', localSpelling: 'Amaziɣ' },
       { id: 'v1-4', dialectCode: 'TUA', dialectName: 'التارقية (ⵜⴰⵎⴰⵌⴰⵇ)', region: 'تمنراست / إليزي / جانت', localSpelling: 'Amajeɣ / Amaheɣ' },
-      { id: 'v1-5', dialectCode: 'CHE', dialectName: 'الشنوية (ⵜⴰⵛⵏⵡⵉⵜ)', region: 'تيبازة / شرشال', localSpelling: 'Amaziɣ' },
+      { id: 'v1-5', dialectCode: 'CHE', dialectName: 'الشناوية (الزناتية) (ⵜⴰⵛⵏⵡⵉⵜ)', region: 'تيبازة / شرشال', localSpelling: 'Amaziɣ' },
     ],
     commonRegions: ['القبائل', 'الأوراس', 'مزاب', 'الهقار والتاسيلي', 'تيبازة', 'قورارة']
   },
@@ -59,7 +59,7 @@ export const INITIAL_DICTIONARY_ENTRIES: DictionaryEntryData[] = [
       { id: 'v3-2', dialectCode: 'CHA', dialectName: 'الشاوية', region: 'كافة المناطق', localSpelling: 'Aman' },
       { id: 'v3-3', dialectCode: 'MOZ', dialectName: 'المزابية', region: 'كافة المناطق', localSpelling: 'Aman' },
       { id: 'v3-4', dialectCode: 'TUA', dialectName: 'التارقية', region: 'كافة المناطق', localSpelling: 'Aman' },
-      { id: 'v3-5', dialectCode: 'CHE', dialectName: 'الشنوية', region: 'كافة المناطق', localSpelling: 'Aman' },
+      { id: 'v3-5', dialectCode: 'CHE', dialectName: 'الشناوية (الزناتية)', region: 'كافة المناطق', localSpelling: 'Aman' },
     ],
     commonRegions: ['القبائل', 'الأوراس', 'مزاب', 'الهقار والتاسيلي', 'تيبازة', 'قورارة']
   },
@@ -233,3 +233,4 @@ export const INITIAL_PROPOSALS: StandardProposal[] = [
     authorName: 'أ. مريم بوزيد (جامعة باتنة 1)'
   }
 ];
+

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -210,7 +210,7 @@ export default function DictionaryPage() {
                   <option value="CHA">الشاوية (ⵜⴰⵛⴰⵡⵉⵜ)</option>
                   <option value="MOZ">المزابية (ⵜⴰⵎⵣⴰⴱⵜ)</option>
                   <option value="TUA">التارقية (ⵜⴰⵎⴰⵌⴰⵇ)</option>
-                  <option value="CHE">الشنوية (ⵜⴰⵛⵏⵡⵉⵜ)</option>
+                  <option value="CHE">الشناوية (الزناتية) (ⵜⴰⵛⵏⵡⵉⵜ)</option>
                 </select>
               </div>
 
@@ -528,3 +528,5 @@ export default function DictionaryPage() {
     </div>
   );
 }
+
+

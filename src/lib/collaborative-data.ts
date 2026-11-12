@@ -1,4 +1,4 @@
-import { TeacherContributionData, CulturalPostData } from '@/types';
+﻿import { TeacherContributionData, CulturalPostData } from '@/types';
 
 export const INITIAL_TEACHER_CONTRIBUTIONS: TeacherContributionData[] = [
   {
@@ -55,7 +55,7 @@ export const INITIAL_CULTURAL_POSTS: CulturalPostData[] = [
     authorName: 'أمينة من تيبازة',
     wilayaOrigin: 'تيبازة',
     category: 'الأمثال الشعبية',
-    title: 'الأمثال الشعبية الشنوية المشتركة مع باقي مناطق الوطن',
+    title: 'الأمثال الشعبية الشناوية (الزناتية) المشتركة مع باقي مناطق الوطن',
     content: 'مثل شنوي قديم يقول: "Aman s tmaziɣt d lberka n tammurt" (الماء بركة الأرض). نجد نفس المعنى في مثل قبائلي وشاوي ومزابي بنفس الجذور.',
     likesCount: 38,
     createdAt: 'قبل 4 أيام'
@@ -71,3 +71,4 @@ export const INITIAL_CULTURAL_POSTS: CulturalPostData[] = [
     createdAt: 'قبل أسبوع'
   }
 ];
+

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import Link from 'next/link';
 import { 
   Landmark, 
@@ -41,7 +41,7 @@ export default function Footer() {
             </p>
 
             <div className="flex flex-wrap gap-2 pt-2">
-              {['القبائلية ⵜⴰⵇⴱⴰⵢⵍⵉⵜ', 'الشاوية ⵜⴰⵛⴰⵡⵉⵜ', 'التارقية ⵜⴰⵎⴰⵌⴰⵇ', 'المزابية ⵜⴰⵎⵣⴰⴱⵜ', 'الشنوية ⵜⴰⵛⵏⵡⵉⵜ'].map((variant, idx) => (
+              {['القبائلية ⵜⴰⵇⴱⴰⵢⵍⵉⵜ', 'الشاوية ⵜⴰⵛⴰⵡⵉⵜ', 'التارقية ⵜⴰⵎⴰⵌⴰⵇ', 'المزابية ⵜⴰⵎⵣⴰⴱⵜ', 'الشناوية (الزناتية) ⵜⴰⵛⵏⵡⵉⵜ'].map((variant, idx) => (
                 <span 
                   key={idx}
                   className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] text-amber-300 font-medium"
@@ -159,3 +159,4 @@ export default function Footer() {
     </footer>
   );
 }
+
