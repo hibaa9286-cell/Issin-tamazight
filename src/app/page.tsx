@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -95,13 +95,13 @@ export default function HomePage() {
             <Sparkles className="w-4 h-4 text-amber-400" />
             <span>المنصة الرقمية الوطنية الموحدة للغة والثقافة الأمازيغية</span>
             <span className="bg-amber-500 text-slate-950 px-2 py-0.5 rounded-full text-[10px] font-black">
-              AGY 2026
+              2026
             </span>
           </div>
 
           {/* Main Title */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight text-white">
-            منصة <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-500 bg-clip-text text-transparent">أگـــــرّام</span> الرقمية
+            منصة <span className="bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-500 bg-clip-text text-transparent">تامازيغت</span> الرقمية
             <br />
             <span className="text-2xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-cyan-300 via-teal-200 to-emerald-400 bg-clip-text text-transparent">
               جسـر الحضارة، العلم، والتعلم الرقمي
@@ -388,3 +388,4 @@ export default function HomePage() {
     </div>
   );
 }
+
